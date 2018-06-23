@@ -30,7 +30,6 @@ cask 'mongodb-compass-community'
 cask 'monodraw'
 cask 'pycharm'
 cask 'webstorm'
-mas 'Xcode', id: 497799835
 
 # database
 brew 'postgres'
