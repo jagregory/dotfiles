@@ -1,0 +1,15 @@
+[alias]
+st = status
+aa = !"git add -A"
+ci = commit
+cia = !"git aa && git ci"
+co = checkout
+pr = !"git pull --rebase"
+rb = rebase
+quick-stats = ! /usr/local/bin/git-quick-stats
+serve = daemon --verbose --export-all --base-path=.git --reuseaddr --strict-paths .git/
+[user]
+	name = James Gregory
+	email = james@jagregory.com
+[credential]
+	helper = osxkeychain
