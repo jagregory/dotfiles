@@ -7,7 +7,6 @@ brew 'mas'
 # devtools
 brew 'adr-tools'
 brew 'bash-completion'
-brew 'bfg'
 brew 'blackbox'
 brew 'cloc'
 brew 'fish'
