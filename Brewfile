@@ -1,6 +1,7 @@
 cask_args appdir: '~/Applications'
 
 tap 'homebrew/cask-versions'
+tap 'homebrew/cask-fonts'
 
 brew 'mas'
 
@@ -23,10 +24,12 @@ brew 'yarn'
 cask 'docker-edge'
 cask 'drawio'
 cask 'graphiql'
+cask 'intellij-idea'
 cask 'iterm2'
-cask 'jetbrains-toolbox'
 cask 'mongodb-compass-community'
 cask 'monodraw'
+cask 'pycharm'
+cask 'webstorm'
 mas 'Xcode', id: 497799835
 
 # database
@@ -85,3 +88,19 @@ mas 'Pages', id: 409201541
 mas 'Trello', id: 1278508951
 mas 'Unsplash Wallpapers', id: 1284863847
 mas 'iA Writer', id: 775737590
+
+# fonts
+cask 'font-andale-mono'
+cask 'font-courier-prime-code'
+cask 'font-dejavu-sans-mono-for-powerline'
+cask 'font-fira-code'
+cask 'font-go-mono'
+cask 'font-hack'
+cask 'font-iosevka'
+cask 'font-menlo-for-powerline'
+cask 'font-office-code-pro'
+cask 'font-open-sans'
+cask 'font-pt-mono'
+cask 'font-roboto-mono'
+cask 'font-ubuntu-mono-derivative-powerline'
+cask 'font-xkcd'
