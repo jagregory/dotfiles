@@ -74,11 +74,20 @@ function fish_prompt --description 'Write out the prompt'
 		set color_cwd $fish_color_cwd
 		set suffix '$'
 	end
-
+	
+	# OP ENV
+	if set -q OP_ENV
+		set_color --dim yellow
+		echo -n "🔒$OP_ENV"
+		set_color normal
+                echo -n ' '
+	end
+	
 	# PWD
 	set_color $color_cwd
 	echo -n (prompt_pwd)
 	set_color normal
+	
 
 	printf '%s ' (__fish_vcs_prompt)
 
