@@ -24,19 +24,17 @@ brew 'yarn'
 cask 'docker-edge'
 cask 'drawio'
 cask 'graphiql'
-cask 'intellij-idea'
 cask 'iterm2'
 cask 'jetbrains-toolbox'
 cask 'mongodb-compass-community'
 cask 'monodraw'
-cask 'pycharm'
-cask 'webstorm'
 
 # database
 brew 'postgres'
 brew 'postgis'
 
 # java
+cask 'java'
 brew 'maven'
 brew 'tomcat'
 
@@ -75,10 +73,7 @@ cask 'omnigraffle'
 cask 'resilio-sync'
 cask 'slack'
 cask 'spotify'
-cask 'timely'
 cask 'tunnelbear'
-cask 'vlc'
-cask 'zoomus'
 mas 'Clocks', id: 414554506
 mas 'Keynote', id: 409183694
 mas 'Kindle', id: 405399194
