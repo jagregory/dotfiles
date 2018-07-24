@@ -34,7 +34,7 @@ cask 'mongodb-compass-community'
 cask 'monodraw'
 
 # database
-cask 'postgres'
+cask 'postgres', { appdir: '/Applications' }
 mas 'SQLPro for Postgres', id: 976140091
 
 # java
