@@ -63,6 +63,7 @@ brew 'wget'
 # security/creds
 brew 'envchain'
 brew 'pwgen'
+brew '1password-env'
 cask '1password'
 cask '1password-cli'
 cask 'gpg-suite'
