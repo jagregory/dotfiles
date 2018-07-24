@@ -34,8 +34,8 @@ cask 'mongodb-compass-community'
 cask 'monodraw'
 
 # database
-brew 'postgres'
-brew 'postgis'
+cask 'postgres'
+mas 'SQLPro for Postgres', id: 976140091
 
 # java
 cask 'java'
