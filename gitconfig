@@ -13,3 +13,8 @@ serve = daemon --verbose --export-all --base-path=.git --reuseaddr --strict-path
 	email = james@jagregory.com
 [credential]
 	helper = osxkeychain
+[filter "lfs"]
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process

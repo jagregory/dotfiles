@@ -78,7 +78,7 @@ function fish_prompt --description 'Write out the prompt'
 	# OP ENV
 	if set -q OP_ENV
 		set_color --dim yellow
-		echo -n "🔒$OP_ENV"
+		echo -n "🔒 $OP_ENV"
 		set_color normal
                 echo -n ' '
 	end

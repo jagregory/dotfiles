@@ -15,3 +15,10 @@ function envchain-sh
 end
 
 [ -f /usr/local/share/autojump/autojump.fish ]; and source /usr/local/share/autojump/autojump.fish
+
+# tabtab source for serverless package
+# uninstall by removing these lines or running `tabtab uninstall serverless`
+[ -f /Users/jag/dev/changineers/whitelabel/node_modules/tabtab/.completions/serverless.fish ]; and . /Users/jag/dev/changineers/whitelabel/node_modules/tabtab/.completions/serverless.fish
+# tabtab source for sls package
+# uninstall by removing these lines or running `tabtab uninstall sls`
+[ -f /Users/jag/dev/changineers/whitelabel/node_modules/tabtab/.completions/sls.fish ]; and . /Users/jag/dev/changineers/whitelabel/node_modules/tabtab/.completions/sls.fish
