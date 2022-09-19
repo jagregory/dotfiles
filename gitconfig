@@ -4,17 +4,22 @@ aa = !"git add -A"
 ci = commit
 cia = !"git aa && git ci"
 co = checkout
-pr = !"git pull --rebase"
 rb = rebase
-quick-stats = ! /usr/local/bin/git-quick-stats
-serve = daemon --verbose --export-all --base-path=.git --reuseaddr --strict-paths .git/
+ci-dd = "!f() { set -e; d=$1; (echo \"$d\" | grep -q '^[+-]\\d*[ymwdHMS]$') || (echo 'Usage: git ci-dd <datediff> <args...>' && return 1); shift; GIT_COMMITTER_DATE=\"$(date -v$d)\" git commit --date \"$(date -v$d)\" \"$@\"; }; f"
+
 [user]
-	name = James Gregory
-	email = james@jagregory.com
+  name = James Gregory
+  email = james@jagregory.com
 [credential]
-	helper = osxkeychain
-[filter "lfs"]
-	required = true
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
+  helper = osxkeychain
+[credential "github.com"]
+  useHttpPath = true
+[core]
+  attributesfile = ~/.gitattributes
+[pull]
+  rebase = merges
+[branch]
+  autoSetupRebase = always
+[log]
+  abbrevCommit = true
+  follow = true

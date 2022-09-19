@@ -72,15 +72,7 @@ function fish_prompt --description 'Write out the prompt'
 		set suffix '#'
 	case '*'
 		set color_cwd $fish_color_cwd
-		set suffix '$'
-	end
-	
-	# OP ENV
-	if set -q OP_ENV
-		set_color --dim yellow
-		echo -n "🔒 $OP_ENV"
-		set_color normal
-                echo -n ' '
+		set suffix ''
 	end
 	
 	# PWD
@@ -95,7 +87,7 @@ function fish_prompt --description 'Write out the prompt'
 	set_color $fish_color_error
 	end
 
-	echo -n "$suffix "
+	echo -n "$suffix"
 
 	set_color normal
 end
