@@ -1,27 +1,28 @@
-cask_args appdir: '~/Applications'
+cask_args appdir: '/Applications'
 
-tap 'fisherman/tap'
 tap 'homebrew/cask-fonts'
 tap 'homebrew/cask-versions'
+tap 'warrensbox/tap'
 
 brew 'mas'
 
 # devtools
 brew 'bash'
 brew 'bash-completion'
+cask 'docker'
 brew 'fish'
-brew 'fisherman'
 brew 'git'
 brew 'jq'
 brew 'neovim'
+brew 'node@16', link: true
+brew 'svn' # needed for fonts
 brew 'yarn'
 cask 'iterm2'
 cask 'jetbrains-toolbox'
-cask 'node@16', link: true
 
 # infra automation
 brew 'awscli'
-brew 'tfswitch'
+brew 'warrensbox/tap/tfswitch'
 
 # rando utils
 brew 'curl'
@@ -29,12 +30,13 @@ brew 'wget'
 
 # security/creds
 cask '1password'
+cask '1password-cli'
 
 # apps
-cask 'caffeine'
 cask 'google-chrome'
 cask 'slack'
 cask 'tunnelbear'
+mas 'Caffeinated', id: 1362171212
 mas 'Clocks', id: 414554506
 mas 'Kindle', id: 405399194
 mas 'Magnet', id: 441258766
@@ -46,7 +48,7 @@ cask 'font-andale-mono'
 cask 'font-courier-prime-code'
 cask 'font-dejavu-sans-mono-for-powerline'
 cask 'font-fira-code'
-cask 'font-go-mono'
+cask 'font-go'
 cask 'font-hack'
 cask 'font-iosevka'
 cask 'font-menlo-for-powerline'
