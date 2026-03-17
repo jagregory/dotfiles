@@ -12,6 +12,7 @@ rb = rebase
 ci-dd = "!f() { set -e; d=$1; (echo \"$d\" | grep -q '^[+-]\\d*[ymwdHMS]$') || (echo 'Usage: git ci-dd <datediff> <args...>' && return 1); shift; GIT_COMMITTER_DATE=\"$(date -v$d)\" git commit --date \"$(date -v$d)\" \"$@\"; }; f"
 ci-dd-abs = "!f() { set -e; d=$1; (echo \"$d\") || (echo 'Usage: git ci-dd-abs <date> <args...>' && return 1); shift; GIT_COMMITTER_DATE=\"$d\" git commit --date \"$d\" \"$@\"; }; f"
 tag-dd = "!f() { set -e; d=$1; (echo \"$d\" | grep -q '^[+-]\\d*[ymwdHMS]$') || (echo 'Usage: git tag-dd <datediff> <args...>' && return 1); shift; GIT_COMMITTER_DATE=\"$(date -v$d)\" git tag \"$@\"; }; f"
+	branch-prune = !git fetch --prune && git branch --format '%(refname:short) %(upstream:track)' | awk '$2 == \"[gone]\" { print $1 }' | xargs git branch -D
 
 [init]
   defaultBranch = main
@@ -21,17 +22,40 @@ tag-dd = "!f() { set -e; d=$1; (echo \"$d\" | grep -q '^[+-]\\d*[ymwdHMS]$') || 
 [user]
   name = James Gregory
   email = james@jagregory.com
+	signingkey = /Users/jag/.ssh/jagregory-github-signing-key.pub
+
 [credential]
   helper = osxkeychain
 [credential "github.com"]
   useHttpPath = true
 [core]
   attributesfile = ~/.gitattributes
+	excludesfile = /Users/jag/.config/git/ignore
 [pull]
   rebase = merges
 [branch]
   autoSetupRebase = always
   sort = -committerdate
 [log]
-  abbrevCommit = true
+  # abbrevCommit = true
   follow = true
+[gpg]
+	format = ssh
+[gpg "ssh"]
+        # program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+	allowedSignersFile = /Users/jag/.ssh/allowed_signers
+[commit]
+	gpgsign = true
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[push]
+	autoSetupRemote = true
+[credential "https://github.com"]
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential

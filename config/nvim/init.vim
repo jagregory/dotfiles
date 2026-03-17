@@ -1,38 +1,7 @@
-set shell=/bin/bash
+set shell=/bin/zsh
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
-
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'embear/vim-localvimrc'
-Plugin 'fatih/vim-go'
-Plugin 'godlygeek/tabular'
-Plugin 'junegunn/fzf'
-Plugin 'junegunn/fzf.vim'
-Plugin 'mileszs/ack.vim'
-Plugin 'othree/es.next.syntax.vim'
-Plugin 'othree/yajs.vim'
-Plugin 'plasticboy/vim-markdown'
-" Plugin 'prettier/vim-prettier'
-" Plugin 'styled-components/vim-styled-components'
-Plugin 'tpope/vim-repeat'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-vinegar'
-Plugin 'vim-airline/vim-airline'
-Plugin 'w0rp/ale'
-Plugin 'jparise/vim-graphql'
-
-" themes
-Plugin 'dracula/vim'
-Plugin 'rakr/vim-one'
-
-call vundle#end()            " required
 filetype plugin indent on    " required
 
 syntax on
