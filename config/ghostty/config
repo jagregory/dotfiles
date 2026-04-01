@@ -1,0 +1,14 @@
+command = /opt/homebrew/bin/tmux new -A -s dev
+
+theme = IC Orange PPL
+macos-icon = retro
+
+macos-option-as-alt = left
+confirm-close-surface = true
+
+# Disable tab/window shortcuts to use tmux instead
+keybind = cmd+t=unbind
+keybind = cmd+n=unbind
+keybind = cmd+w=unbind
+keybind = cmd+shift+d=unbind
+keybind = cmd+d=unbind
