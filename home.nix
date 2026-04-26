@@ -19,7 +19,14 @@ in
   xdg.configFile."fish/functions/fish_prompt.fish".source =
     ./config/fish/functions/fish_prompt.fish;
 
-  programs.zsh.enable = !isDarwin;
+  programs.zsh = {
+    enable = !isDarwin;
+    initContent = ''
+      if [[ -n "$SSH_CONNECTION" ]] && [[ -z "$TMUX" ]] && command -v tmux >/dev/null; then
+        exec tmux new -A -s dev
+      fi
+    '';
+  };
 
   programs.tmux = {
     enable = true;
