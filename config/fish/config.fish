@@ -6,8 +6,6 @@ set -x PATH $PATH /Users/jag/.local/bin
 set -x SHELL /opt/homebrew/bin/fish
 set -x EDITOR nvim
 
-[ -f /usr/local/share/autojump/autojump.fish ]; and source /usr/local/share/autojump/autojump.fish
-
 alias vim nvim
 alias tf terraform
 alias tailscale "/Applications/Tailscale.app/Contents/MacOS/Tailscale"
