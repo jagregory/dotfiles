@@ -39,7 +39,10 @@ in
   programs.zsh = {
     enable = !isDarwin;
     initContent = ''
-      if [[ -n "$SSH_CONNECTION" ]] && [[ -z "$TMUX" ]] && command -v tmux >/dev/null; then
+      if { [[ -n "$SSH_CONNECTION" ]] || [[ -n "$MOSH_CONNECTION" ]] || [[ -n "$SSH_TTY" ]]; } \
+         && [[ -z "$TMUX" ]] \
+         && [[ $- == *i* ]] \
+         && command -v tmux >/dev/null; then
         exec tmux new -A -s dev
       fi
     '';
