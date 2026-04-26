@@ -7,14 +7,9 @@ brew 'mas'
 # devtools
 cask 'docker-desktop'
 brew 'granted'
+brew 'mise'
 cask 'ghostty'
 cask 'jetbrains-toolbox'
-brew 'fish'
-brew 'git'
-brew 'jq'
-brew 'mise'
-brew 'neovim'
-brew 'tmux'
 
 # security/creds
 cask '1password'

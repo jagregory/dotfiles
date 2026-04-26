@@ -13,6 +13,8 @@ in
 
   home.packages = [
     pkgs.gh
+    pkgs.jq
+    pkgs.neovim
     workmux.packages.${pkgs.system}.default
   ];
 
