@@ -80,6 +80,10 @@ in
     mouse = true;
     terminal = "tmux-256color";
 
+    plugins = with pkgs.tmuxPlugins; [
+      fzf-tmux-url
+    ];
+
     extraConfig = ''
       set -g allow-passthrough on
       set -ag terminal-overrides ",xterm-256color:RGB"
