@@ -1,0 +1,1 @@
+- when using git DO NOT pass the -C argument, your tool use will be blocked. You have permission to use git in the working directory.

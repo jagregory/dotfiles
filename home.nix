@@ -35,6 +35,9 @@ in
     compile = false
   '';
 
+  home.file.".claude/CLAUDE.md".source = ./config/claude/CLAUDE.md;
+  home.file.".claude/settings.json".source = ./config/claude/settings.json;
+
   xdg.configFile."fish/functions/fish_prompt.fish".source =
     ./config/fish/functions/fish_prompt.fish;
 
