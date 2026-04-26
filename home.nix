@@ -19,6 +19,8 @@ in
   xdg.configFile."fish/functions/fish_prompt.fish".source =
     ./config/fish/functions/fish_prompt.fish;
 
+  programs.zsh.enable = !isDarwin;
+
   programs.fish = {
     enable = true;
 
