@@ -97,7 +97,7 @@ in
       set -ag terminal-overrides ",xterm-256color:RGB"
       # mosh strips tmux's default OSC 52 selection format. Override Ms to
       # force the literal "c" (clipboard) selection that mosh accepts.
-      set -ag terminal-overrides ",xterm-256color:Ms=\E]52;c%p1%.0s;%p2%s\007"
+      set -ag terminal-overrides ",xterm-256color:Ms=\033]52;c%p1%.0s;%p2%s\007"
       set -as terminal-features ",*:hyperlinks"
 
       bind '"' split-window -v -c "#{pane_current_path}"
