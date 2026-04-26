@@ -37,6 +37,10 @@ in
   xdg.configFile."fish/functions/fish_prompt.fish".source =
     ./config/fish/functions/fish_prompt.fish;
 
+  xdg.configFile."ghostty/config" = lib.mkIf isDarwin {
+    source = ./config/ghostty/config;
+  };
+
   programs.zsh = {
     enable = !isDarwin;
     initContent = ''
