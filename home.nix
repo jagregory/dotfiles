@@ -20,7 +20,33 @@ in
     workmux.packages.${pkgs.system}.default
   ] ++ lib.optionals (!isDarwin) [
     pkgs.firefox  # browsh's runtime; Linux-only via Nix
+
+    # Wrapper: splits a tmux pane for browsh if inside tmux, else runs inline.
+    (pkgs.writeShellScriptBin "browsh-open" ''
+      if [ -n "$TMUX" ]; then
+        exec tmux split-window -h "${pkgs.browsh}/bin/browsh --startup-url '$1'"
+      else
+        exec ${pkgs.browsh}/bin/browsh --startup-url "$1"
+      fi
+    '')
   ];
+
+  xdg.desktopEntries = lib.optionalAttrs (!isDarwin) {
+    browsh = {
+      name = "Browsh";
+      exec = "browsh-open %u";
+      mimeType = [ "x-scheme-handler/http" "x-scheme-handler/https" ];
+      terminal = false;
+    };
+  };
+
+  xdg.mimeApps = lib.mkIf (!isDarwin) {
+    enable = true;
+    defaultApplications = {
+      "x-scheme-handler/http" = "browsh.desktop";
+      "x-scheme-handler/https" = "browsh.desktop";
+    };
+  };
 
   programs.neovim = {
     enable = true;
