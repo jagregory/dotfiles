@@ -1,4 +1,4 @@
-{ pkgs, lib, username, ... }:
+{ pkgs, lib, username, workmux, ... }:
 
 let
   isDarwin = pkgs.stdenv.isDarwin;
@@ -11,7 +11,10 @@ in
 
   programs.home-manager.enable = true;
 
-  home.packages = [ pkgs.gh ];
+  home.packages = [
+    pkgs.gh
+    workmux.packages.${pkgs.system}.default
+  ];
 
   home.sessionVariables.EDITOR = "nvim";
   home.sessionPath = [ "$HOME/.nix-profile/bin" ];
@@ -30,6 +33,7 @@ in
 
   programs.ssh = {
     enable = true;
+    enableDefaultConfig = false;
     matchBlocks = {
       "github.com" = {
         user = "git";

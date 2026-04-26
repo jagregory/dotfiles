@@ -7,15 +7,16 @@
       url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    workmux.url = "github:raine/workmux";
   };
 
-  outputs = { nixpkgs, home-manager, ... }:
+  outputs = { nixpkgs, home-manager, workmux, ... }:
     let
       mkHome = system: username:
         home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.${system};
           modules = [ ./home.nix ];
-          extraSpecialArgs = { inherit username; };
+          extraSpecialArgs = { inherit username workmux; };
         };
     in {
       homeConfigurations = {
