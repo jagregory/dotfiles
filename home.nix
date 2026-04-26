@@ -23,13 +23,22 @@ in
     pkgs.xdg-utils  # provides xdg-open
 
     # Wrapper: splits a tmux pane for browsh if inside tmux, else runs inline.
-    (pkgs.writeShellScriptBin "browsh-open" ''
-      if [ -n "$TMUX" ]; then
-        exec tmux split-window -h "${pkgs.browsh}/bin/browsh --startup-url '$1'"
-      else
-        exec ${pkgs.browsh}/bin/browsh --startup-url "$1"
-      fi
-    '')
+    # Also exposed as `www-browser` so xdg-open's headless fallback finds it.
+    (pkgs.symlinkJoin {
+      name = "browsh-tmux-launcher";
+      paths = let
+        body = ''
+          if [ -n "$TMUX" ]; then
+            exec tmux split-window -h "${pkgs.browsh}/bin/browsh --startup-url '$1'"
+          else
+            exec ${pkgs.browsh}/bin/browsh --startup-url "$1"
+          fi
+        '';
+      in [
+        (pkgs.writeShellScriptBin "browsh-open" body)
+        (pkgs.writeShellScriptBin "www-browser" body)
+      ];
+    })
   ];
 
   xdg.desktopEntries = lib.optionalAttrs (!isDarwin) {
