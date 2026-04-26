@@ -131,16 +131,7 @@ in
           hash = "sha256-ZAZNOBE4n7tXpszNFw6Ri8BlV9s/4x9H2NovqRmOrCY=";
         };
       };
-    in [
-      {
-        plugin = fzf-links;
-        # Delegate URL opening to xdg-open so it follows the system default
-        # (which is set to browsh-in-tmux on Linux via xdg.mimeApps).
-        extraConfig = ''
-          set -g @fzf-links-browser-open-cmd "xdg-open '%url'"
-        '';
-      }
-    ];
+    in [ fzf-links ];
 
     extraConfig = ''
       set -g allow-passthrough on
