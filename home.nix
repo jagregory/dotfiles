@@ -80,12 +80,20 @@ in
     mouse = true;
     terminal = "tmux-256color";
 
-    plugins = with pkgs.tmuxPlugins; [
-      fzf-tmux-url
+    plugins = [
+      {
+        plugin = pkgs.tmuxPlugins.fzf-tmux-url;
+        # Selected URL goes to the tmux buffer, which set-clipboard relays
+        # via OSC 52 to whatever terminal you're connected from (Blink, etc.).
+        extraConfig = ''
+          set -g @fzf-url-open 'tmux set-buffer -w'
+        '';
+      }
     ];
 
     extraConfig = ''
       set -g allow-passthrough on
+      set -g set-clipboard on
       set -ag terminal-overrides ",xterm-256color:RGB"
       set -as terminal-features ",*:hyperlinks"
 
