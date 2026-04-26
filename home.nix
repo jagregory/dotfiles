@@ -83,8 +83,8 @@ in
     plugins = [
       {
         plugin = pkgs.tmuxPlugins.fzf-tmux-url;
-        # Selected URL goes to the tmux buffer, which set-clipboard relays
-        # via OSC 52 to whatever terminal you're connected from (Blink, etc.).
+        # Hand the URL to tmux's clipboard buffer; the Ms terminfo override
+        # below makes that OSC 52 emit reach the terminal (works over mosh).
         extraConfig = ''
           set -g @fzf-url-open 'tmux set-buffer -w'
         '';
@@ -95,6 +95,9 @@ in
       set -g allow-passthrough on
       set -g set-clipboard on
       set -ag terminal-overrides ",xterm-256color:RGB"
+      # mosh strips tmux's default OSC 52 selection format. Override Ms to
+      # force the literal "c" (clipboard) selection that mosh accepts.
+      set -ag terminal-overrides ",xterm-256color:Ms=\E]52;c%p1%.0s;%p2%s\7"
       set -as terminal-features ",*:hyperlinks"
 
       bind '"' split-window -v -c "#{pane_current_path}"
