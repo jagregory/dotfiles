@@ -14,6 +14,7 @@ in
   home.packages = [ pkgs.gh ];
 
   home.sessionVariables.EDITOR = "nvim";
+  home.sessionPath = [ "$HOME/.nix-profile/bin" ];
 
   xdg.configFile."fish/functions/fish_prompt.fish".source =
     ./config/fish/functions/fish_prompt.fish;
