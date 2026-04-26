@@ -49,13 +49,13 @@ setup-github-ssh
 
 ## First-run on a new Mac
 
-```bash
-# Install Nix (Determinate)
-curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
-
-# Activate
-nix run home-manager/release-25.11 -- switch --flake github:jagregory/dotfiles#jag
-
-# Install Mac-only GUIs/CLIs
-brew bundle --file=~/.dotfiles/Brewfile
-```
+1. Install Nix per [Determinate's docs](https://docs.determinate.systems/getting-started/installation).
+2. Install Homebrew per [brew.sh](https://brew.sh).
+3. Activate this flake:
+   ```bash
+   nix run home-manager/release-25.11 -- switch --flake github:jagregory/dotfiles#jag
+   ```
+4. Install Mac-only GUIs/MAS apps:
+   ```bash
+   brew bundle --file=~/.dotfiles/Brewfile
+   ```
