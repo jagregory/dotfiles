@@ -29,6 +29,11 @@ in
 
   home.sessionPath = [ "$HOME/.nix-profile/bin" ];
 
+  home.file.".config/mise/config.toml".text = ''
+    [settings]
+    "node.compile" = false
+  '';
+
   xdg.configFile."fish/functions/fish_prompt.fish".source =
     ./config/fish/functions/fish_prompt.fish;
 
