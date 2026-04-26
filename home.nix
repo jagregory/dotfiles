@@ -134,9 +134,10 @@ in
     in [
       {
         plugin = fzf-links;
-        # Open URLs in a new tmux pane via browsh (Firefox-based text browser).
+        # Delegate URL opening to xdg-open so it follows the system default
+        # (which is set to browsh-in-tmux on Linux via xdg.mimeApps).
         extraConfig = ''
-          set -g @fzf-links-browser-open-cmd "tmux split-window -h '${pkgs.browsh}/bin/browsh --startup-url \"%url\"'"
+          set -g @fzf-links-browser-open-cmd "xdg-open '%url'"
         '';
       }
     ];
