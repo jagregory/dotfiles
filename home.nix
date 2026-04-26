@@ -20,6 +20,7 @@ in
     workmux.packages.${pkgs.system}.default
   ] ++ lib.optionals (!isDarwin) [
     pkgs.firefox  # browsh's runtime; Linux-only via Nix
+    pkgs.xdg-utils  # provides xdg-open
 
     # Wrapper: splits a tmux pane for browsh if inside tmux, else runs inline.
     (pkgs.writeShellScriptBin "browsh-open" ''
