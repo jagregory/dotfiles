@@ -93,6 +93,8 @@ in
 
     shellAliases = {
       assume = "source ${pkgs.granted}/share/assume.fish";
+    } // lib.optionalAttrs (!isDarwin) {
+      bootstrap = "bash /etc/nixos-config/install.sh --home-manager github:jagregory/dotfiles#${username}";
     };
 
     shellInit = ''
