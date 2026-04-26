@@ -15,7 +15,6 @@ alias tailscale "/Applications/Tailscale.app/Contents/MacOS/Tailscale"
 set -g fish_user_paths "/usr/local/opt/gettext/bin" $fish_user_paths
 set -g fish_user_paths /opt/homebrew/bin/ $fish_user_paths
 
-# source /opt/homebrew/opt/asdf/libexec/asdf.fish
 source /Users/jag/.config/fish/completions/granted.fish
 alias assume="source /opt/homebrew/bin/assume.fish"
 
