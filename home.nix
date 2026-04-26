@@ -11,7 +11,36 @@ in
 
   programs.home-manager.enable = true;
 
-  home.packages = [ pkgs.gh ];
+  home.packages = [
+    pkgs.gh
+
+    (pkgs.writeShellScriptBin "setup-github-ssh" ''
+      set -euo pipefail
+
+      KEY="$HOME/.ssh/id_ed25519"
+
+      if [ ! -f "$KEY" ]; then
+        echo "Generating ed25519 key at $KEY"
+        mkdir -p "$HOME/.ssh"
+        chmod 700 "$HOME/.ssh"
+        ssh-keygen -t ed25519 -f "$KEY" -C "$(whoami)@$(hostname)" -N ""
+      else
+        echo "Using existing key at $KEY"
+      fi
+
+      if ! gh auth status >/dev/null 2>&1; then
+        echo "Not authenticated. Run 'gh auth login' first." >&2
+        exit 1
+      fi
+
+      title="$(hostname)-$(date +%Y%m%d)"
+      gh ssh-key add "$KEY.pub" --title "$title"
+      gh ssh-key add "$KEY.pub" --title "$title-sign" --type signing
+
+      echo
+      echo "Done. Test with: ssh -T git@github.com"
+    '')
+  ];
 
   home.sessionVariables.EDITOR = "nvim";
   home.sessionPath = [ "$HOME/.nix-profile/bin" ];
