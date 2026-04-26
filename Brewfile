@@ -14,6 +14,7 @@ brew 'git'
 brew 'jq'
 brew 'mise'
 brew 'neovim'
+brew 'tmux'
 
 # security/creds
 cask '1password'
