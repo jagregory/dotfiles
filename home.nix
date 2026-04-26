@@ -22,6 +22,33 @@ in
     pkgs.firefox  # browsh's runtime; Linux-only via Nix
     pkgs.xdg-utils  # provides xdg-open
 
+    # Carbonyl: Chromium running in the terminal. Not in nixpkgs; package
+    # the upstream linux-amd64 prebuilt with autoPatchelfHook + Chromium libs.
+    (pkgs.stdenv.mkDerivation rec {
+      pname = "carbonyl";
+      version = "0.0.3";
+      src = pkgs.fetchurl {
+        url = "https://github.com/fathyb/carbonyl/releases/download/v${version}/carbonyl.linux-amd64.zip";
+        hash = "sha256-RqkC6im7Mvdz+07jQUI3BbkjRagQQiuN+T6upqHsetI=";
+      };
+      nativeBuildInputs = [ pkgs.unzip pkgs.autoPatchelfHook ];
+      buildInputs = with pkgs; [
+        stdenv.cc.cc.lib
+        glib gtk3 nss nspr alsa-lib cups dbus expat
+        libxkbcommon mesa
+        xorg.libxcb xorg.libX11 xorg.libXcomposite xorg.libXdamage
+        xorg.libXext xorg.libXfixes xorg.libXrandr
+        pango cairo atk at-spi2-atk at-spi2-core
+      ];
+      installPhase = ''
+        runHook preInstall
+        mkdir -p $out/share/carbonyl $out/bin
+        cp -r ./* $out/share/carbonyl/
+        ln -s $out/share/carbonyl/carbonyl $out/bin/carbonyl
+        runHook postInstall
+      '';
+    })
+
     # Wrapper: splits a tmux pane for browsh if inside tmux, else runs inline.
     # Also exposed as `www-browser` so xdg-open's headless fallback finds it.
     (pkgs.symlinkJoin {
