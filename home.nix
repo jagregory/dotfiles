@@ -18,6 +18,20 @@ in
       set -euo pipefail
 
       KEY="$HOME/.ssh/id_ed25519"
+      REQUIRED_SCOPES="admin:public_key,admin:ssh_signing_key"
+
+      if ! gh auth status -h github.com >/dev/null 2>&1; then
+        echo "Not authenticated. Run:" >&2
+        echo "  gh auth login -h github.com --scopes '$REQUIRED_SCOPES'" >&2
+        exit 1
+      fi
+
+      status=$(gh auth status -h github.com 2>&1)
+      if ! echo "$status" | grep -q admin:public_key \
+         || ! echo "$status" | grep -q admin:ssh_signing_key; then
+        echo "Refreshing gh auth with required scopes..."
+        gh auth refresh -h github.com -s "$REQUIRED_SCOPES"
+      fi
 
       if [ ! -f "$KEY" ]; then
         echo "Generating ed25519 key at $KEY"
@@ -28,14 +42,14 @@ in
         echo "Using existing key at $KEY"
       fi
 
-      if ! gh auth status >/dev/null 2>&1; then
-        echo "Not authenticated. Run 'gh auth login' first." >&2
-        exit 1
-      fi
-
       title="$(hostname)-$(date +%Y%m%d)"
-      gh ssh-key add "$KEY.pub" --title "$title"
-      gh ssh-key add "$KEY.pub" --title "$title-sign" --type signing
+      gh ssh-key add "$KEY.pub" --title "$title" || true
+      gh ssh-key add "$KEY.pub" --title "$title-sign" --type signing || true
+
+      if ! ssh-keygen -F github.com >/dev/null 2>&1; then
+        echo "Pre-trusting github.com host key..."
+        ssh-keyscan -t ed25519 github.com >> "$HOME/.ssh/known_hosts" 2>/dev/null
+      fi
 
       echo
       echo "Done. Test with: ssh -T git@github.com"
