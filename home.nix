@@ -21,6 +21,28 @@ in
 
   programs.zsh.enable = !isDarwin;
 
+  programs.tmux = {
+    enable = true;
+    prefix = if isDarwin then "C-a" else "C-b";
+    mouse = true;
+    terminal = "tmux-256color";
+
+    extraConfig = ''
+      set -g allow-passthrough on
+      set -ag terminal-overrides ",xterm-256color:RGB"
+
+      bind '"' split-window -v -c "#{pane_current_path}"
+      bind % split-window -h -c "#{pane_current_path}"
+      bind -n C-l send-keys -R \; clear-history \; send-keys Enter
+
+      # workmux
+      bind C-t run-shell "workmux sidebar"
+      bind C-s display-popup -h 30 -w 100 -d "#{pane_current_path}" -E "workmux dashboard"
+
+      set-option -g default-shell ${pkgs.fish}/bin/fish
+    '';
+  };
+
   programs.fish = {
     enable = true;
 
