@@ -13,6 +13,45 @@ in
 
   home.packages = [ pkgs.gh ];
 
+  home.sessionVariables.EDITOR = "nvim";
+
+  xdg.configFile."fish/functions/fish_prompt.fish".source =
+    ./config/fish/functions/fish_prompt.fish;
+
+  programs.fish = {
+    enable = true;
+
+    shellAliases = {
+      vim = "nvim";
+    } // lib.optionalAttrs isDarwin {
+      assume = "source /opt/homebrew/bin/assume.fish";
+    };
+
+    shellInit = ''
+      set -x PATH $PATH ./node_modules/.bin
+      set -x PATH $PATH ~/.local/bin
+    '' + lib.optionalString isDarwin ''
+      set -g fish_user_paths /opt/homebrew/bin $fish_user_paths
+
+      if test -f ~/.config/fish/completions/granted.fish
+        source ~/.config/fish/completions/granted.fish
+      end
+
+      if not set -q SSH_AUTH_SOCK
+        set -gx SSH_AUTH_SOCK (launchctl getenv SSH_AUTH_SOCK)
+      end
+    '';
+
+    interactiveShellInit = ''
+      set -gx PNPM_HOME ~/Library/pnpm
+      if not string match -q -- $PNPM_HOME $PATH
+        set -gx PATH $PNPM_HOME $PATH
+      end
+
+      mise activate fish | source
+    '';
+  };
+
   programs.git = {
     enable = true;
 
