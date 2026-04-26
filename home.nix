@@ -83,6 +83,7 @@ in
     plugins = let
       fzf-links = pkgs.tmuxPlugins.mkTmuxPlugin {
         pluginName = "fzf-links";
+        rtpFilePath = "fzf-links.tmux";
         version = "1.4.15";
         src = pkgs.fetchFromGitHub {
           owner = "alberti42";
