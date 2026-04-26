@@ -1,12 +1,9 @@
 cask_args appdir: '/Applications'
 
-tap 'common-fate/granted'
-
 brew 'mas'
 
 # devtools
 cask 'docker-desktop'
-brew 'granted'
 brew 'mise'
 cask 'ghostty'
 cask 'jetbrains-toolbox'

@@ -13,6 +13,7 @@ in
 
   home.packages = [
     pkgs.gh
+    pkgs.granted
     pkgs.jq
     pkgs.neovim
     workmux.packages.${pkgs.system}.default
@@ -77,8 +78,7 @@ in
 
     shellAliases = {
       vim = "nvim";
-    } // lib.optionalAttrs isDarwin {
-      assume = "source /opt/homebrew/bin/assume.fish";
+      assume = "source ${pkgs.granted}/share/assume.fish";
     };
 
     shellInit = ''
@@ -86,10 +86,6 @@ in
       set -x PATH $PATH ~/.local/bin
     '' + lib.optionalString isDarwin ''
       set -g fish_user_paths /opt/homebrew/bin $fish_user_paths
-
-      if test -f ~/.config/fish/completions/granted.fish
-        source ~/.config/fish/completions/granted.fish
-      end
 
       if not set -q SSH_AUTH_SOCK
         set -gx SSH_AUTH_SOCK (launchctl getenv SSH_AUTH_SOCK)
