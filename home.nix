@@ -18,6 +18,8 @@ in
     pkgs.granted
     pkgs.jq
     workmux.packages.${pkgs.system}.default
+  ] ++ lib.optionals (!isDarwin) [
+    pkgs.firefox  # browsh's runtime; Linux-only via Nix
   ];
 
   programs.neovim = {
