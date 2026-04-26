@@ -1,6 +1,6 @@
 command = /opt/homebrew/bin/tmux new -A -s dev
 
-theme = IC Orange PPL
+theme = Ayu
 macos-icon = retro
 
 macos-option-as-alt = left
@@ -12,3 +12,5 @@ keybind = cmd+n=unbind
 keybind = cmd+w=unbind
 keybind = cmd+shift+d=unbind
 keybind = cmd+d=unbind
+
+font-size = 15.5
