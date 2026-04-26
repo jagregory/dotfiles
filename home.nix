@@ -12,6 +12,7 @@ in
   programs.home-manager.enable = true;
 
   home.packages = [
+    pkgs.fzf
     pkgs.gh
     pkgs.granted
     pkgs.jq
