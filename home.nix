@@ -1,4 +1,4 @@
-{ pkgs, lib, username, workmux, ... }:
+{ pkgs, lib, config, username, workmux, ... }:
 
 let
   isDarwin = pkgs.stdenv.isDarwin;
@@ -15,11 +15,23 @@ in
     pkgs.gh
     pkgs.granted
     pkgs.jq
-    pkgs.neovim
     workmux.packages.${pkgs.system}.default
   ];
 
-  home.sessionVariables.EDITOR = "nvim";
+  programs.neovim = {
+    enable = true;
+    defaultEditor = true;
+    viAlias = true;
+    vimAlias = true;
+  };
+
+  # On Mac, symlink directly to the live dotfiles repo so lazy.nvim can write
+  # lazy-lock.json. On Linux (VPS, read-only is fine) use the in-store copy.
+  xdg.configFile."nvim".source =
+    if isDarwin
+    then config.lib.file.mkOutOfStoreSymlink "${homeDir}/.dotfiles/config/nvim"
+    else ./config/nvim;
+
   home.sessionPath = [ "$HOME/.nix-profile/bin" ];
 
   xdg.configFile."fish/functions/fish_prompt.fish".source =
@@ -77,7 +89,6 @@ in
     enable = true;
 
     shellAliases = {
-      vim = "nvim";
       assume = "source ${pkgs.granted}/share/assume.fish";
     };
 
