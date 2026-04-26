@@ -12,6 +12,7 @@ in
   programs.home-manager.enable = true;
 
   home.packages = [
+    pkgs.browsh
     pkgs.fzf
     pkgs.gh
     pkgs.granted
@@ -92,7 +93,15 @@ in
           hash = "sha256-ZAZNOBE4n7tXpszNFw6Ri8BlV9s/4x9H2NovqRmOrCY=";
         };
       };
-    in [ fzf-links ];
+    in [
+      {
+        plugin = fzf-links;
+        # Open URLs in a new tmux pane via browsh (Firefox-based text browser).
+        extraConfig = ''
+          set -g @fzf-links-browser-open-cmd "tmux split-window -h '${pkgs.browsh}/bin/browsh --startup-url \"%url\"'"
+        '';
+      }
+    ];
 
     extraConfig = ''
       set -g allow-passthrough on
