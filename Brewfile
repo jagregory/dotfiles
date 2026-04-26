@@ -12,6 +12,7 @@ cask 'jetbrains-toolbox'
 brew 'fish'
 brew 'git'
 brew 'jq'
+brew 'mise'
 brew 'neovim'
 
 # security/creds
