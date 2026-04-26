@@ -71,6 +71,22 @@ in
     '';
   };
 
+  programs.ssh = {
+    enable = true;
+    matchBlocks = {
+      "github.com" = {
+        user = "git";
+        identityFile = "${homeDir}/.ssh/id_ed25519";
+      };
+      "*" = {
+        addKeysToAgent = "yes";
+        extraOptions = lib.optionalAttrs isDarwin {
+          UseKeychain = "yes";
+        };
+      };
+    };
+  };
+
   programs.tmux = {
     enable = true;
     prefix = if isDarwin then "C-a" else "C-b";
@@ -140,9 +156,8 @@ in
 
     signing = {
       format = "ssh";
-      signByDefault = isDarwin;
-    } // lib.optionalAttrs isDarwin {
-      key = "${homeDir}/.ssh/jagregory-github-signing-key.pub";
+      signByDefault = true;
+      key = "${homeDir}/.ssh/id_ed25519.pub";
     };
 
     settings = {
