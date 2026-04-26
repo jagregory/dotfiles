@@ -71,6 +71,7 @@ in
     extraConfig = ''
       set -g allow-passthrough on
       set -ag terminal-overrides ",xterm-256color:RGB"
+      set -as terminal-features ",*:hyperlinks"
 
       bind '"' split-window -v -c "#{pane_current_path}"
       bind % split-window -h -c "#{pane_current_path}"
