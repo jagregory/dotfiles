@@ -65,9 +65,10 @@ in
     ];
 
     signing = {
-      key = "${homeDir}/.ssh/jagregory-github-signing-key.pub";
-      signByDefault = true;
       format = "ssh";
+      signByDefault = isDarwin;
+    } // lib.optionalAttrs isDarwin {
+      key = "${homeDir}/.ssh/jagregory-github-signing-key.pub";
     };
 
     settings = {
@@ -102,10 +103,10 @@ in
       };
       log.follow = true;
       push.autoSetupRemote = true;
-      gpg.ssh.allowedSignersFile = "${homeDir}/.ssh/allowed_signers";
 
     } // lib.optionalAttrs isDarwin {
       credential.helper = "osxkeychain";
+      gpg.ssh.allowedSignersFile = "${homeDir}/.ssh/allowed_signers";
     } // {
       "credential \"github.com\"".useHttpPath = true;
       "credential \"https://github.com\"".helper = [ "" "!${pkgs.gh}/bin/gh auth git-credential" ];
