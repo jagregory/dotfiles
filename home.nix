@@ -80,16 +80,18 @@ in
     mouse = true;
     terminal = "tmux-256color";
 
-    plugins = [
-      {
-        plugin = pkgs.tmuxPlugins.fzf-tmux-url;
-        # Hand the URL to tmux's clipboard buffer; the Ms terminfo override
-        # below makes that OSC 52 emit reach the terminal (works over mosh).
-        extraConfig = ''
-          set -g @fzf-url-open 'tmux set-buffer -w'
-        '';
-      }
-    ];
+    plugins = let
+      fzf-links = pkgs.tmuxPlugins.mkTmuxPlugin {
+        pluginName = "fzf-links";
+        version = "1.4.15";
+        src = pkgs.fetchFromGitHub {
+          owner = "alberti42";
+          repo = "tmux-fzf-links";
+          rev = "1.4.15";
+          hash = "sha256-ZAZNOBE4n7tXpszNFw6Ri8BlV9s/4x9H2NovqRmOrCY=";
+        };
+      };
+    in [ fzf-links ];
 
     extraConfig = ''
       set -g allow-passthrough on
