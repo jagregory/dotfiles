@@ -1,4 +1,4 @@
-{ pkgs, lib, config, username, workmux, ... }:
+{ pkgs, lib, username, workmux, ... }:
 
 let
   isDarwin = pkgs.stdenv.isDarwin;
@@ -25,12 +25,7 @@ in
     vimAlias = true;
   };
 
-  # On Mac, symlink directly to the live dotfiles repo so lazy.nvim can write
-  # lazy-lock.json. On Linux (VPS, read-only is fine) use the in-store copy.
-  xdg.configFile."nvim".source =
-    if isDarwin
-    then config.lib.file.mkOutOfStoreSymlink "${homeDir}/.dotfiles/config/nvim"
-    else ./config/nvim;
+  xdg.configFile."nvim".source = ./config/nvim;
 
   home.sessionPath = [ "$HOME/.nix-profile/bin" ];
 
