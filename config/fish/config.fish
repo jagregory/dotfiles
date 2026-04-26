@@ -1,16 +1,9 @@
-set -x GOPATH /Users/jag/dev/go
 set -x PATH $PATH ./node_modules/.bin
-set -x PATH $PATH $GOPATH/bin
-set -x PATH $PATH /Users/jag/bin
 set -x PATH $PATH /Users/jag/.local/bin
-set -x SHELL /opt/homebrew/bin/fish
 set -x EDITOR nvim
 
 alias vim nvim
-alias tf terraform
-alias tailscale "/Applications/Tailscale.app/Contents/MacOS/Tailscale"
 
-set -g fish_user_paths "/usr/local/opt/gettext/bin" $fish_user_paths
 set -g fish_user_paths /opt/homebrew/bin/ $fish_user_paths
 
 source /Users/jag/.config/fish/completions/granted.fish
@@ -29,4 +22,3 @@ mise activate fish | source
 if not set -q SSH_AUTH_SOCK
   set -gx SSH_AUTH_SOCK (launchctl getenv SSH_AUTH_SOCK)
 end
-
