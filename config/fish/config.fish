@@ -28,7 +28,7 @@ end
 # bun
 set --export BUN_INSTALL "$HOME/.bun"
 set --export PATH $BUN_INSTALL/bin $PATH
-~/.local/bin/mise activate fish | source
+mise activate fish | source
 
 # ssh agent
 if not set -q SSH_AUTH_SOCK
