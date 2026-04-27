@@ -22,6 +22,7 @@ in
     pkgs.gh
     pkgs.granted
     pkgs.jq
+    pkgs.mosh
     workmux.packages.${pkgs.system}.default
   ] ++ lib.optionals (!isDarwin) [
     pkgs.firefox  # browsh's runtime; Linux-only via Nix
@@ -161,6 +162,11 @@ in
       bind C-s display-popup -h 30 -w 100 -d "#{pane_current_path}" -E "workmux dashboard"
 
       set-option -g default-shell ${fishPkg}/bin/fish
+
+      # Tint the status bar red on remote sessions so it's obvious where you are.
+      if-shell '[ -n "$SSH_CONNECTION$SSH_TTY$MOSH_CONNECTION" ]' \
+        'set -g status-style "bg=colour88 fg=white"' \
+        'set -g status-style "bg=colour236 fg=white"'
     '';
   };
 
@@ -170,6 +176,8 @@ in
 
     shellAliases = {
       assume = "source ${pkgs.granted}/share/assume.fish";
+    } // lib.optionalAttrs isDarwin {
+      mosh = "mosh --ssh=/usr/bin/ssh";
     } // lib.optionalAttrs (!isDarwin) {
       bootstrap = "bash /etc/nixos-config/install.sh --home-manager github:jagregory/dotfiles#${username}";
     };
