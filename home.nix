@@ -126,7 +126,7 @@ in
 
   programs.tmux = {
     enable = true;
-    prefix = if isDarwin then "C-a" else "C-b";
+    prefix = "C-b";
     mouse = true;
     terminal = "tmux-256color";
 
@@ -167,6 +167,21 @@ in
       if-shell '[ -n "$SSH_CONNECTION$SSH_TTY$MOSH_CONNECTION" ]' \
         'set -g status-style "bg=colour88 fg=white"' \
         'set -g status-style "bg=colour236 fg=white"'
+
+      # F12 toggles OFF mode: disables the prefix so keys pass through to a
+      # nested tmux. Status bar greys out and shows [OFF] as the visual cue.
+      set -ag status-right "#([ \"$(tmux show-option -qv key-table)\" = off ] && echo '#[fg=white,bg=colour088] OFF #[default]')"
+      bind -T root F12 \
+        set prefix None \;\
+        set key-table off \;\
+        set status-style "bg=colour238 fg=colour245" \;\
+        if -F '#{pane_in_mode}' 'send-keys -X cancel' \;\
+        refresh-client -S
+      bind -T off F12 \
+        set -u prefix \;\
+        set -u key-table \;\
+        set -u status-style \;\
+        refresh-client -S
     '';
   };
 
