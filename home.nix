@@ -80,7 +80,12 @@ in
   '';
 
   home.file.".claude/CLAUDE.md".source = ./config/claude/CLAUDE.md;
-  home.file.".claude/settings.json".source = ./config/claude/settings.json;
+
+  # settings.json must be writable so Claude Code can persist runtime changes
+  # (effort level, etc). Use activation to copy rather than symlink.
+  home.activation.claudeSettings = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    install -m 644 ${./config/claude/settings.json} "$HOME/.claude/settings.json"
+  '';
 
   xdg.configFile."fish/functions/fish_prompt.fish".source =
     ./config/fish/functions/fish_prompt.fish;
