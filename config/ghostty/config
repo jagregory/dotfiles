@@ -1,4 +1,4 @@
-command = /opt/homebrew/bin/tmux new -A -s dev
+command = direct:/Users/jag/.nix-profile/bin/tmux new -A -s dev
 
 theme = Ayu
 macos-icon = retro

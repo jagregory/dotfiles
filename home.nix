@@ -3,6 +3,11 @@
 let
   isDarwin = pkgs.stdenv.isDarwin;
   homeDir = if isDarwin then "/Users/${username}" else "/home/${username}";
+  fishPkg = if isDarwin then pkgs.fish.overrideAttrs (old: {
+    postFixup = (old.postFixup or "") + ''
+      /usr/bin/codesign --force --sign - $out/bin/fish
+    '';
+  }) else pkgs.fish;
 in
 {
   home.username = username;
@@ -150,12 +155,13 @@ in
       bind C-t run-shell "workmux sidebar"
       bind C-s display-popup -h 30 -w 100 -d "#{pane_current_path}" -E "workmux dashboard"
 
-      set-option -g default-shell ${pkgs.fish}/bin/fish
+      set-option -g default-shell ${fishPkg}/bin/fish
     '';
   };
 
   programs.fish = {
     enable = true;
+    package = fishPkg;
 
     shellAliases = {
       assume = "source ${pkgs.granted}/share/assume.fish";
@@ -167,8 +173,6 @@ in
       set -x PATH $PATH ./node_modules/.bin
       set -x PATH $PATH ~/.local/bin
     '' + lib.optionalString isDarwin ''
-      set -g fish_user_paths /opt/homebrew/bin $fish_user_paths
-
       if not set -q SSH_AUTH_SOCK
         set -gx SSH_AUTH_SOCK (launchctl getenv SSH_AUTH_SOCK)
       end
