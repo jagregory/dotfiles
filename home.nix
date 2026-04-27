@@ -88,6 +88,13 @@ in
     install -m 644 ${./config/claude/settings.json} "$HOME/.claude/settings.json"
   '';
 
+  # Workaround: `granted sso populate` creates ~/.aws with mode 0644 on fresh
+  # hosts, which is missing the dir execute bit and breaks every subsequent
+  # call. Pre-create it with 0700.
+  home.activation.awsConfigDir = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    install -d -m 700 "$HOME/.aws"
+  '';
+
   xdg.configFile."fish/functions/fish_prompt.fish".source =
     ./config/fish/functions/fish_prompt.fish;
 
