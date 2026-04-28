@@ -1,4 +1,4 @@
-{ pkgs, lib, username, workmux, ... }:
+{ pkgs, lib, username, workmux, unstable, ... }:
 
 let
   isDarwin = pkgs.stdenv.isDarwin;
@@ -224,6 +224,19 @@ in
 
       mise activate fish | source
     '';
+  };
+
+  programs.atuin = {
+    enable = true;
+    package = unstable.atuin;
+    enableFishIntegration = true;
+    settings = {
+      dialect = "uk";
+      auto_sync = false;
+      workspaces = true;
+      style = "compact";
+      tmux.enabled = true;
+    };
   };
 
   programs.git = {
