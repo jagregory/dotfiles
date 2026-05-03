@@ -213,6 +213,11 @@ in
       # Nix installer drops a bash init in /etc/profile.d but no fish equivalent.
       fish_add_path -p /nix/var/nix/profiles/default/bin ~/.nix-profile/bin
 
+      # Homebrew (Apple Silicon) — equivalent of `brew shellenv` for fish.
+      if test -x /opt/homebrew/bin/brew
+        /opt/homebrew/bin/brew shellenv fish | source
+      end
+
       if not set -q SSH_AUTH_SOCK
         set -gx SSH_AUTH_SOCK (launchctl getenv SSH_AUTH_SOCK)
       end
