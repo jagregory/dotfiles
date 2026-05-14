@@ -34,8 +34,7 @@ let
     vendorHash = "sha256-mkTmZt9R59bjVzcTWOGz+Uta6WpNZmoA0Tcy7SqSvpw=";
     subPackages = [ "cmd/slk" ];
     nativeBuildInputs = [ unstable.pkg-config ];
-    buildInputs = [ unstable.xorg.libX11 ]
-      ++ lib.optionals isDarwin [ unstable.darwin.apple_sdk.frameworks.AppKit ];
+    buildInputs = [ unstable.libx11 ];
     doCheck = false; # tests need a database
   };
 in
@@ -54,9 +53,9 @@ in
     pkgs.jq
     pkgs.mosh
     tuicr
-    slk
     workmux.packages.${pkgs.system}.default
   ] ++ lib.optionals (!isDarwin) [
+    slk
     pkgs.firefox  # browsh's runtime; Linux-only via Nix
     pkgs.xdg-utils  # provides xdg-open
 
