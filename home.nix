@@ -181,7 +181,14 @@ in
           hash = "sha256-ZAZNOBE4n7tXpszNFw6Ri8BlV9s/4x9H2NovqRmOrCY=";
         };
       };
-    in [ fzf-links ];
+    in [{
+      plugin = fzf-links;
+      # tmux-fzf-links uses Python 3.10+ syntax (match/case). The system
+      # /usr/bin/python3 on macOS is 3.9, so pin to Nix's python3.
+      extraConfig = ''
+        set -g @fzf-links-python "${pkgs.python3}/bin/python3"
+      '';
+    }];
 
     extraConfig = ''
       set -g allow-passthrough on
