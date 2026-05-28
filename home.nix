@@ -1,4 +1,4 @@
-{ pkgs, lib, username, workmux, unstable, ... }:
+{ pkgs, lib, username, unstable, ... }:
 
 let
   isDarwin = pkgs.stdenv.isDarwin;
@@ -8,6 +8,38 @@ let
       /usr/bin/codesign --force --sign - $out/bin/fish
     '';
   }) else pkgs.fish;
+
+  workmux = let
+    version = "0.1.211";
+    srcs = {
+      "aarch64-darwin" = pkgs.fetchurl {
+        url = "https://github.com/raine/workmux/releases/download/v${version}/workmux-darwin-arm64.tar.gz";
+        hash = "sha256-dsl8c3OC2OtvQxzkzCxS0wDdG7Q+C9CZRh0mjtkc2Vo=";
+      };
+      "x86_64-darwin" = pkgs.fetchurl {
+        url = "https://github.com/raine/workmux/releases/download/v${version}/workmux-darwin-amd64.tar.gz";
+        hash = "sha256-6E4zCZ3GB/0RsuIN8re+ReDRsAGBfvB3tf0z5xLoPms=";
+      };
+      "aarch64-linux" = pkgs.fetchurl {
+        url = "https://github.com/raine/workmux/releases/download/v${version}/workmux-linux-arm64.tar.gz";
+        hash = "sha256-qOnj7pMlH7Vzo3BAk2H44AbwaDW1fScRjg+vTrkPhGk=";
+      };
+      "x86_64-linux" = pkgs.fetchurl {
+        url = "https://github.com/raine/workmux/releases/download/v${version}/workmux-linux-amd64.tar.gz";
+        hash = "sha256-qr0uHWPqiOdAkK2+kAUnZ6PLyzCyQNQf96O6ej8a+qs=";
+      };
+    };
+  in pkgs.stdenvNoCC.mkDerivation {
+    pname = "workmux";
+    inherit version;
+    src = srcs.${pkgs.system};
+    sourceRoot = ".";
+    dontBuild = true;
+    installPhase = ''
+      mkdir -p $out/bin
+      find . -name workmux -type f -exec install -m755 {} $out/bin/workmux \;
+    '';
+  };
 
   slk = unstable.buildGoModule rec {
     pname = "slk";
@@ -39,7 +71,7 @@ in
     pkgs.granted
     pkgs.jq
     pkgs.mosh
-    workmux.packages.${pkgs.system}.default
+    workmux
   ] ++ lib.optionals (!isDarwin) [
     slk
     pkgs.firefox  # browsh's runtime; Linux-only via Nix

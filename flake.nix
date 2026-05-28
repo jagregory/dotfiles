@@ -8,17 +8,16 @@
       url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    workmux.url = "github:raine/workmux";
   };
 
-  outputs = { nixpkgs, nixpkgs-unstable, home-manager, workmux, ... }:
+  outputs = { nixpkgs, nixpkgs-unstable, home-manager, ... }:
     let
       mkHome = system: username:
         home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.${system};
           modules = [ ./home.nix ];
           extraSpecialArgs = {
-            inherit username workmux;
+            inherit username;
             unstable = nixpkgs-unstable.legacyPackages.${system};
           };
         };
