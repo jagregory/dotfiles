@@ -9,19 +9,6 @@ let
     '';
   }) else pkgs.fish;
 
-  tuicr = pkgs.rustPlatform.buildRustPackage rec {
-    pname = "tuicr";
-    version = "0.13.0";
-    src = pkgs.fetchFromGitHub {
-      owner = "agavra";
-      repo = "tuicr";
-      rev = "v${version}";
-      hash = "sha256-Ohv6aMUT3wkEJShCs4X0ScPwqHHcb0nQOuI7fnpUrTs=";
-    };
-    cargoHash = "sha256-DOyZDybkJ8mFsPUGc4tgbwA165MQTKYT6Xf/2ai+OxY=";
-    doCheck = false; # tests need a real git repo
-  };
-
   slk = unstable.buildGoModule rec {
     pname = "slk";
     version = "0.7.7";
@@ -52,7 +39,6 @@ in
     pkgs.granted
     pkgs.jq
     pkgs.mosh
-    tuicr
     workmux.packages.${pkgs.system}.default
   ] ++ lib.optionals (!isDarwin) [
     slk
@@ -274,7 +260,7 @@ in
 
   programs.atuin = {
     enable = true;
-    package = unstable.atuin;
+    package = pkgs.atuin;
     enableFishIntegration = true;
     settings = {
       dialect = "uk";
