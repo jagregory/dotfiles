@@ -148,6 +148,19 @@ in
   xdg.configFile."fish/functions/fish_prompt.fish".source =
     ./config/fish/functions/fish_prompt.fish;
 
+  # Manage the workmux config so the agent pane can't be silently dropped
+  # (a stray rewrite to this file once reduced it to theme-only, which made
+  # `workmux add -P` fail with "no pane is configured to run the agent").
+  xdg.configFile."workmux/config.yaml".text = ''
+    nerdfont: false
+    theme: obsidian-pop
+
+    panes:
+      - command: <agent>
+        focus: true
+      - split: horizontal
+  '';
+
   xdg.configFile."ghostty/config" = lib.mkIf isDarwin {
     source = ./config/ghostty/config;
   };
