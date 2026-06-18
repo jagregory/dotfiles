@@ -279,6 +279,7 @@ in
     shellInit = ''
       set -x PATH $PATH ./node_modules/.bin
       set -x PATH $PATH ~/.local/bin
+      set -x PATH $PATH ~/go/bin
     '' + lib.optionalString isDarwin ''
       # Nix installer drops a bash init in /etc/profile.d but no fish equivalent.
       fish_add_path -p /nix/var/nix/profiles/default/bin ~/.nix-profile/bin
